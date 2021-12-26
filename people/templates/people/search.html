@@ -1,0 +1,16 @@
+{% extends "people/base.html" %}
+{% load static %}
+
+{% block javascript %}
+<script src="{% static 'people/search.js' %}"></script>
+{% endblock javascript%}
+
+{% block content %}
+    <div class="search-bar">
+        <form id="search-form" autocomplete="off">
+            {% csrf_token %}
+            <input type="text" id="search-input" class="p-1 w-50 search" placeholder="Write Job Title" name="title">
+        </form>
+    </div>
+    <div id="results"></div>
+{% endblock %}

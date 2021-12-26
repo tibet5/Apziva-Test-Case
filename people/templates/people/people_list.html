@@ -1,0 +1,67 @@
+{% extends "people/base.html" %}
+{% load static %}
+
+{% block content %}
+    {% for people in peoples %}
+    
+        <div class="card">
+        <a class="card-title" data-toggle="collapse" href="#people_{{people.id}}" role="button" aria-expanded="false" aria-controls="collapseExample">
+            <div class="card-body">
+                <div class="flex-card-inner">
+                    <img class="avatar-image" src={{ people.avatar_url}} alt="Avatar">
+                    <div class="flex-title">
+                        <h4>{{ people.name}}</h4>
+                        <p>{{ people.bio}}</p>  
+                    </div>   
+                </div>
+            </div>
+        </a>
+            <div class="collapse" id="people_{{people.id}}">
+                <div class="collapse-inner">
+                        <a href="{{people.user_url}}">
+                            <img class="inner-logo-icon" src="{% static 'people/GitHub_Logo.png' %}">
+                        </a>
+                        <a href="mailto:{{ people.e_mail }}"><i class="fas fa-envelope"></i></a>
+                        <i class="fas fa-map-marker-alt">&nbsp;<span>{{ people.location}}</span></i>
+                        {% if people.hireable %}
+                        <i class="fas fa-check hireable">&nbsp;<span>Hireable</span></i>
+                        {% endif %}
+                        {% if people.hireable == False %}
+                        <i class="fas fa-times not-hireable">&nbsp;<span>Not Hireable</span></i>
+                        {% endif %}
+                        {% if people.hireable == None %}
+                        <i class="fas fa-question null-hireable">&nbsp;<span>No Info About Hiring</span></i>
+                        {% endif %}
+                </div>
+            </div>
+        </div>
+{% endfor %}
+
+
+
+
+
+
+
+
+
+
+<!-- PAGINATION -->
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+{% endblock content %}
